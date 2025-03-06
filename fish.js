@@ -58,7 +58,7 @@ class Fish extends Items {
         this.x = lerp(this.x, this.randomX, this.speed)
         this.y = lerp(this.y, this.randomY, this.speed)
 
-        text(this.randomX + "  " + this.randomY, 500, 500)
+        //text(this.randomX + "  " + this.randomY, 500, 500)
     }
 
     /*
