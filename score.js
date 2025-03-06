@@ -1,21 +1,23 @@
 class Score {
+    /*
+    the construtor initialises the score object with a score of 0, 5 lives, and gameStatus 0
+    */
     constructor() {
         this.score = 0
-        this.maxScore = 0
         this.lives = 5
         this.gameStatus = 0
     }
     
+    /*
+    the getter and setter methods which are responsible for manipulating the data in the 
+    attributes
+    */
     getScore() {
-        return this.score;
-    }
-
-    getMaxScore() {
-        return this.maxScore;
+        return this.score
     }
 
     getLives() {
-        return this.lives;
+        return this.lives
     }
 
     getGameStatus() {
@@ -27,22 +29,19 @@ class Score {
     }
 
     incrementScore(newPoints) {
-        this.score += newPoints;
+        this.score += newPoints
     }
 
     incrementLives(newLives) {
-        this.lives += newLives;
+        this.lives += newLives
     }
 
-
-    updateMaxScore() {
-        if (this.score > this.maxScore) {
-            this.maxScore = this.score;
-        }
-    }
+    /*
+    the update method which checks if lives is below 1, and if yes, 
+    sets the gameStatus to 2
+    */
 
     update() {
-        this.updateMaxScore()
         if (this.lives < 1) {
             this.gameStatus = 2
         } 

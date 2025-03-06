@@ -1,4 +1,7 @@
 class Items {
+    /*
+    the construtor initialises the Items object
+    */
     constructor(x, y, w, l, dropSpeed, duration, imgFile, isCollided, isActive, gravity) {
         this.x = x
         this.y = y
@@ -11,6 +14,11 @@ class Items {
         this.isActive = isActive
         this.gravity = gravity
     }
+
+    /*
+    the getter and setter methods which are responsible for manipulating the data in the 
+    attributes
+    */
 
     getX() {
         return this.x
@@ -76,33 +84,42 @@ class Items {
         this.isCollided = newIsCollided
     }
 
-
+    /*
+    the hookCollision method contains code which calculates the distance between the item and the hook,
+    and sets the boolean value of isCollided to true is the distance is within the diameter of the hook
+    */
     hookCollision() {
         const hookX = lineHook.getHookX()
         const hookY = lineHook.getHookY()
         const hookDia = lineHook.getHookDia()
-        //print(hookX + "  " + hookY + "  " + hookDia)
-        let dx = Math.abs(hookX - this.x);
-        let dy = Math.abs(hookY - this.y);
+        //console.log(hookX + "  " + hookY + "  " + hookDia)
+        let dx = Math.abs(hookX - this.x)
+        let dy = Math.abs(hookY - this.y)
         let distance = Math.sqrt(dx * dx + dy * dy)
         if (distance < hookDia) {
-            //print("caught")
-            this.setX(hookX);
-            this.setY(hookY);
+            //console.log("caught")
+            this.setX(hookX)
+            this.setY(hookY)
             this.isCollided = true
         }
-        //print(dx + "  " + dy)
+        //console.log(dx + "  " + dy)
     }
 
+    /*
+    the durationDecrementer method reduces the value of duration by 1 every time it is called, which is once per frame
+    */
     durationDecrementer() {
-        this.setDuration(this.getDuration() - 1)
+        this.duration -= 1
     }
 
+    /*
+    the drop method contains code which accelerates the item downward from its spawn point to
+    a randomly generated y coordinate within the playing area
+    */
     drop() {
         if (this.y < this.dropY && this.isActive == false) {
 
             this.dropSpeed = this.dropSpeed + this.gravity
-            //this.dropSpeed = min(this.dropSpeed, 5)
             //console.log(this.dropSpeed + "  drop")
             this.y = this.y + this.dropSpeed
             //console.log(this.y + "  y")
@@ -116,11 +133,16 @@ class Items {
 }
 
 class ItemManager {
+    /*
+    the construtor initialises the ItemManager object
+    */
     constructor() {
         this.fManager = []
         this.eManager = []
     }
-
+    /*
+    the fSpawner method contains code which spawns a fish with attributes differing based on a random number generator
+    */
     fSpawner(canvasXRandNum) {
         let fRandNum = floor(random(0, 21))
         let fish = null
@@ -141,9 +163,11 @@ class ItemManager {
             console.log("epic fish")
         }
         this.fManager.push(fish)
-        //print(fish.x + " " + fish.y)
+        //console.log(fish.x + " " + fish.y)
     }
-
+    /*
+    the fSpawner method is the same as the above but for enemies
+    */
     eSpawner(canvasXRandNum) {
         let eRandNum = floor(random(0, 11))
         let enemy = null
@@ -157,6 +181,11 @@ class ItemManager {
         this.eManager.push(enemy)
     }
 
+    /*
+    the despawner method contains which code checks if the duration of the item is less than 1, 
+    if yes, then it removes the item from the array and reduces the lives by 1 if the item
+    is a fish
+    */
     despawner() {
         for (let i = this.fManager.length - 1; i >= 0; i--) {
             if (this.fManager[i].getDuration() < 1) {
@@ -172,7 +201,11 @@ class ItemManager {
         }
     }
 
-
+    /*
+    the update method contains code which spawns a new fish and enemy object every set time period,
+    runs the despawner method, then calls the update method for each individual fish and enemy using 
+    for loops
+    */
     update() {
         if ((frameCount % 100) == 0) {
             this.fSpawner(floor(random(0, CANVASX - backgroundAttributes.landWidth)))
@@ -183,15 +216,14 @@ class ItemManager {
         this.despawner()
         for (let i = 0; i < this.fManager.length; i++) {
             this.fManager[i].update()
-            //fish.update();
-            //print("updatingf")
+            //console.log("updatingf")
             //console.log(this.fManager[i].x + "  " + this.fManager[i].y)
             //console.log(this.fManager[i].y)
         }
         for (let i = 0; i < this.eManager.length; i++) {
-            let enemy = this.eManager[i];
-            enemy.update();
-            //print("updatinge")
+            let enemy = this.eManager[i]
+            enemy.update()
+            //console.log("updatinge")
         }
     }
 }

@@ -141,7 +141,7 @@ the setup function contains the creation of the canvas, the creation of the fish
 lineHook, and score objects, and runs the startScreen function 
 */
 function setup() {
-  createCanvas(CANVASX, CANVASY);
+  createCanvas(CANVASX, CANVASY)
   fishingRod = new FishingRod(fishingRodAttributes.startXPos,
     fishingRodAttributes.startYPos,
     fishingRodAttributes.width,
@@ -158,7 +158,10 @@ function setup() {
   this.startScreen()
 }
 
-
+/*
+the draw function contains the logic which checks the gameStatus value and calls the appropriate screen
+0 for the starting screen, 1 for the gameplay screen, otherwise the end screen
+*/
 function draw() {
   console.log(score.getGameStatus())
   if (score.getGameStatus() == 0) {
@@ -170,6 +173,10 @@ function draw() {
   } 
 }
 
+/*
+the startScreen function contains the code which displays the start screen, containing a background and a button,
+which if pressed, starts the game
+*/
 function startScreen() {
   background(100)
   text("play game", 400, 600)
@@ -182,12 +189,14 @@ function startScreen() {
     startButton.mousePressed(() => {
       score.setGameStatus(1)
       startButton.hide()
-    });
+    })
   }
-
-  
 } 
 
+/*
+the gameplay function contains the code which calls the update methods for all the objects and
+shows the lives, points, and frame count
+*/
 function gameplay() {
   gameplayBackground()
   fishingRod.update()
@@ -198,8 +207,13 @@ function gameplay() {
   text(frameCount, CANVASX - 30, 20, 50, 20)
   text("Lives:  " + score.getLives(), 20, 20)
   text("Points:  " +   score.getScore(), 400, 20)
-  //console.log(score.getMaxScore())
 }
+
+/*
+the endGame function contains the code which clears the background,
+shows a 'restart game' button and an input box for the players name,
+displays the leaderboard which is sorted from highest to lowest points, 
+*/
 
 function endGame() {
   background(100)
@@ -261,6 +275,10 @@ function endGame() {
     })
 }
 
+/*
+the gameplayBackground function contains code which sets the background colour, sets the 'sea' colour,
+draws a basket and a platform for it
+*/
 function gameplayBackground() {
   rectMode(CORNER)
   background(backgroundAttributes.backgroundColor)
@@ -286,6 +304,10 @@ function gameplayBackground() {
     backgroundAttributes.basketHeight)
 }
 
+/*
+the resetGame function contains code which resets the game by reinitialising the fishing rod,
+itemManager, lineHook, and score objects to their original states
+*/
 function resetGame() {
   fishingRod = new FishingRod(fishingRodAttributes.startXPos,
     fishingRodAttributes.startYPos,
